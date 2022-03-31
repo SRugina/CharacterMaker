@@ -1,0 +1,6 @@
+node_modules
+worker-build
+yarn.lock
+public/build
+public/sw.js
+functions/\[\[path\]\].js
