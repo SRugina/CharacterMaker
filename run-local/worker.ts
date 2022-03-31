@@ -35,8 +35,15 @@ export function createRequestHandler({
   return (event: FetchEvent) => {
     let loadContext =
       typeof getLoadContext === "function" ? getLoadContext(event) : undefined;
+    // MODIFIED: to allow directly navigating to the web app when offline,
+    // we must reconstruct the network request as same-origin so that Remix
+    // can process the request
+    let request = event.request.clone();
+    if (request.mode === "navigate") {
+      request = new Request(request, { mode: "same-origin" });
+    }
 
-    return handleRequest(event.request, loadContext);
+    return handleRequest(request, loadContext);
   };
 }
 
