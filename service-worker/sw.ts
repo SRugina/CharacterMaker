@@ -69,7 +69,35 @@ self.addEventListener("activate", (event) => {
   // do not end the activate event until this worker has replaced the old one,
   // if any were present before.
   // If that fails, the (new) Service Worker will not be installed.
-  event.waitUntil(self.clients.claim());
+  event.waitUntil(
+    self.clients.claim().then(() => {
+      // delete old cached files that are no longer part of the web app's
+      // list of cache urls
+      caches.open("assets").then(async (cache) => {
+        return Promise.all(
+          // based on code from https://stackoverflow.com/a/45468998/11274749
+          await cache.keys().then((keys) =>
+            keys
+              .filter((request, _index, _array) => {
+                // Return true if you want to remove this cache,
+                // but remember that caches are shared across
+                // the whole origin
+                return !STATIC_CACHE_URLS.includes(
+                  new URL(request.url).pathname
+                );
+              })
+              .map((request, _index, _array) => {
+                console.log(
+                  "Deleting old cache: ",
+                  new URL(request.url).pathname
+                );
+                return cache.delete(request);
+              })
+          )
+        );
+      });
+    })
+  );
 });
 
 // whenever the web app sends a network request, intercept it with this worker
