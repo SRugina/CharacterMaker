@@ -173,9 +173,10 @@ export default function EditCharacter() {
     return fetch(request).then((rawResponse) => {
       rawResponse.json().then((response) => {
         console.log("response", response);
-        setStoring(false);
         // remove the request that just completed (i.e. oldQueue[0])
         setUpdateQueue((oldQueue) => oldQueue.slice(1));
+
+        setStoring(false);
       });
     });
   }, []);
