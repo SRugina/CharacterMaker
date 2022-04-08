@@ -11,4 +11,7 @@ declare global {
   interface WorkerGlobalScope {
     process: { env: ProcessEnv };
   }
+  // MODIFIED: to avoid typescript error
+  // for some reason, the above is not sufficient
+  var process: { env: ProcessEnv };
 }

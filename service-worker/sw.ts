@@ -38,11 +38,13 @@ const route_links = () => {
 
 // collect every static url that we need to cache into an Array
 const STATIC_CACHE_URLS = [
-  build.assets.url,
-  build.assets.entry.module,
-  ...build.assets.entry.imports,
-  ...route_assets(),
-  ...route_links(),
+  ...new Set([
+    build.assets.url,
+    build.assets.entry.module,
+    ...build.assets.entry.imports,
+    ...route_assets(),
+    ...route_links(),
+  ]),
 ];
 
 // when the Service Worker is ready to be installed by the browser,

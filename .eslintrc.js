@@ -3,7 +3,10 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     tsconfigRootDir: __dirname,
-    project: ["./tsconfig.json"],
+    project: [
+      "./tsconfig.json",
+      "./service-worker/build-scripts/tsconfig.json",
+    ],
   },
   extends: [
     "@remix-run/eslint-config",
@@ -16,10 +19,22 @@ module.exports = {
     browser: true,
     node: true,
   },
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"],
+      rules: {
+        "no-undef": "off",
+      },
+    },
+  ],
   rules: {
     "react/react-in-jsx-scope": 0,
     "react/display-name": 0,
     "react/prop-types": 0,
+    "no-dupe-class-members": "off",
+    "@typescript-eslint/no-dupe-class-members": ["error"],
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": ["error"],
     "@typescript-eslint/ban-ts-comment": [
       "error",
       { "ts-ignore": "allow-with-description" },

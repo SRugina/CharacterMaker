@@ -1,22 +1,8 @@
 {
-  "include": [
-    "remix.env.d.ts",
-    ".eslintrc.js",
-    "**/*.js",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules",
-    "worker-build",
-    "public/build",
-    "public/sw.js",
-    "functions/[[path]].js",
-    "service-worker/build-scripts"
-  ],
+  "include": ["./build-switch-cf.ts", "./build-switch-worker.ts"],
   "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2021", "WebWorker"],
-    "types": ["@cloudflare/workers-types"],
+    "lib": ["ES2021"],
+    "types": ["node"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
@@ -25,9 +11,6 @@
     "target": "ES2019",
     "strict": true,
     "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
-    },
     "allowJs": true,
     "skipLibCheck": true,
     "alwaysStrict": true,
