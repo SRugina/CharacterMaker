@@ -9,7 +9,7 @@ export default function App() {
     // browser is shown
     if (!("serviceWorker" in navigator)) {
       navigate("/", { replace: true });
-    } else {
+    } else if (location.pathname === "/app" || location.pathname === "/app/") {
       // this route is just a wrapper for all the sub-pages under `/app/`
       // so send to the overview page if a user mistakenly arrives here
       navigate("/app/overview", { replace: true });
