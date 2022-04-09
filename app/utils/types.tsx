@@ -8,6 +8,9 @@ export type RecursivePartial<T> = {
     : T[P];
 };
 
+// the Stored and Rendered types below account up to Races
+// and Feats (so not Classes, Backgrounds, Inventory, etc.)
+
 export interface StoredSheet {
   id: string;
   name: string;
@@ -68,8 +71,8 @@ export interface TemplateFeatureConfig {
 }
 
 // TODO: allow more types, e.g. value of skill bonus, raw value of Ability Score, initiative, etc.
-type Numerable = number | "prof" | keyof StoredASIMod;
-type NumerableWithExpertise = Numerable | "exp";
+export type Numerable = number | "prof" | keyof StoredASIMod;
+export type NumerableWithExpertise = Numerable | "exp";
 
 export interface TemplateChoice<T> {
   choose: Numerable;
@@ -103,7 +106,7 @@ export interface TemplateReferenceOverride {
   for: TemplateReference;
 }
 
-type TemplateReference =
+export type TemplateReference =
   | TemplateReferenceExternal
   | TemplateReferenceAbilities
   | TemplateReferenceCustom
@@ -178,7 +181,58 @@ export interface AbilityValue {
   dice?: string;
 }
 
+export type StoredAbilitiesMethod =
+  | "Standard Array"
+  | "Point Buy"
+  | "Rolled"
+  | "Manual";
+
 export interface StoredAbilities
   extends Record<keyof StoredASIMod, Omit<AbilityValue, "bonuses">> {
+  method: StoredAbilitiesMethod;
+}
+
+export interface RenderedSheet
+  extends Pick<StoredSheet, "name" | "race" | "custom"> {
+  abilities: RenderedAbilities;
+  characterLevel: number;
+  prof: number;
+  languages: RenderedLanguages;
+  skills: RenderedSkills;
+  tools?: {
+    [tool: string]: TemplateReference;
+  };
+  counters?: RenderedCounters;
+  feats?: {
+    [name: string]: RenderedFeat;
+  };
+  overrides?: { override: FeatureOverride; for: TemplateReference }[];
+}
+
+export interface RenderedLanguages {
+  [language: string]: TemplateReference;
+}
+
+export interface RenderedSkill {
+  prof?: TemplateReference;
+  exp?: TemplateReference;
+  bonuses?: AbilityBonus[];
+}
+
+export interface RenderedSkills {
+  [skill: string]: RenderedSkill;
+}
+
+export interface RenderedAbilities
+  extends Record<keyof StoredASIMod, AbilityValue> {
   method: "Standard Array" | "Point Buy" | "Rolled" | "Manual";
+}
+
+export interface RenderedCounters {
+  [name: string]: {
+    source: TemplateReference;
+    used: number;
+    max: Numerable;
+    reset: "shortrest" | "longrest" | "dawn";
+  };
 }

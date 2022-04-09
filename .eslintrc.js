@@ -52,6 +52,7 @@ module.exports = {
       2,
       {
         argsIgnorePattern: "^_",
+        ignoreRestSiblings: true,
       },
     ],
     "no-console": [

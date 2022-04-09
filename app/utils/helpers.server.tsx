@@ -24,7 +24,7 @@ export async function newCharacter(name: string) {
 }
 
 // updates a character (and optionally its metadata)
-// return true/false for success of the operation
+// returns true/false for success of the operation
 export async function updateCharacter(
   id: string,
   sheet: RecursivePartial<StoredSheet>,
