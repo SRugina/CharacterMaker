@@ -74,7 +74,7 @@ export const StandardArraySelection = ({
           <label key={ability}>
             <span>{ability}</span>
             <select
-              className="block mt-1"
+              className="block mt-1 bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100"
               name={abilityNameToShorthand(ability)}
               onChange={(e) => {
                 setStandardArrayChoicesUsed((old) => {

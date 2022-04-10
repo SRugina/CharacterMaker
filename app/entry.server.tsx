@@ -13,6 +13,12 @@ export default function handleRequest(
   );
 
   responseHeaders.set("Content-Type", "text/html");
+  // set Content Security Policy HTTP Header
+  // to allow inline scripts for now TODO: upgrade Remix
+  responseHeaders.set(
+    "Content-Security-Policy",
+    "script-src 'self' 'unsafe-inline'"
+  );
 
   return new Response("<!DOCTYPE html>" + markup, {
     status: responseStatusCode,

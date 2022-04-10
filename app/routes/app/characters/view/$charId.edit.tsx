@@ -294,6 +294,7 @@ export default function EditCharacter() {
             <label>
               <span>Character Name</span>
               <input
+                className="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100"
                 type="text"
                 name="name"
                 value={sheetName}
@@ -306,7 +307,7 @@ export default function EditCharacter() {
                 <label className="block">
                   <span>Generation Method</span>
                   <select
-                    className="block mt-1"
+                    className="block mt-1 bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100"
                     name="abilityGenMethod"
                     value={abilityGenMethod}
                     onChange={(e) =>
